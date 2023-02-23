@@ -83,6 +83,7 @@ namespace Calculadora_Proyecto
                 default:
                     resultado = num;
                     break;
+                    
             }
         }
        
