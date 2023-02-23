@@ -147,8 +147,8 @@ namespace Calculadora_Proyecto
 
         private void btnPi_Click(object sender, EventArgs e)
         {
-            
-            double num = double.Parse(txtResultado.Text);
+
+            double num = double.Parse(calculadora.eliminaCaracter(txtResultado.Text));
             txtResultado.Text += "π";
             string btnPi = (sender as Button).Text;
             calculadora.operacion(num, btnPi);
@@ -157,8 +157,8 @@ namespace Calculadora_Proyecto
 
         private void btnE_Click(object sender, EventArgs e)
         {
-            
-            double num = double.Parse(txtResultado.Text);
+
+            double num = double.Parse(calculadora.eliminaCaracter(txtResultado.Text));
             txtResultado.Text += "e";
             string btnE = (sender as Button).Text;
             calculadora.operacion(num, btnE);
@@ -167,7 +167,7 @@ namespace Calculadora_Proyecto
 
         private void btnLogNatural_Click(object sender, EventArgs e)
         {
-            double num = double.Parse(txtResultado.Text);
+            double num = double.Parse(calculadora.eliminaCaracter(txtResultado.Text));
             txtResultado.Text += "ln";
             string btnLogNatural = (sender as Button).Text;
             calculadora.operacion(num, btnLogNatural);
@@ -192,7 +192,7 @@ namespace Calculadora_Proyecto
 
         private void btnLogaritmo_Click(object sender, EventArgs e)
         {
-            double num = double.Parse(txtResultado.Text);
+            double num = double.Parse(calculadora.eliminaCaracter(txtResultado.Text));
             txtResultado.Text += "Log₁₀";
             string btnLogaritmo = (sender as Button).Text;
             calculadora.operacion(num, btnLogaritmo);
@@ -213,7 +213,33 @@ namespace Calculadora_Proyecto
         private void btnTan_Click(object sender, EventArgs e)
         {
             
-            
+
+        }
+
+        private void txtResultado_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '+' && e.KeyChar != '-' && e.KeyChar != '*' && e.KeyChar != '/' && e.KeyChar != (char)Keys.Enter)
+            {
+                e.Handled = true;
+            }
+
+            // Si se presiona la tecla Enter, realizar la operación actual
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                calculadora.igual(double.Parse(txtResultado.Text));
+                e.Handled = true;
+                
+                txtResultado.Text = calculadora.getResultado().ToString();
+                calculadora.clear();
+            }
+
+            // Si se presiona un operador, realizar la operación anterior y guardar el operador para la siguiente operación
+            if (e.KeyChar == '+' || e.KeyChar == '-' || e.KeyChar == '*' || e.KeyChar == '/')
+            {
+                calculadora.operacion(double.Parse(txtResultado.Text), e.KeyChar.ToString());
+                txtResultado.Text = "";
+                e.Handled = true;
+            }
         }
     }
 }

@@ -41,6 +41,9 @@ namespace Calculadora_Proyecto
                 case "x":
                     resultado *= num;
                     break;
+                case "*":
+                    resultado *= num;
+                    break;
                 case "/":
                     resultado /= num;
                     break;
@@ -89,7 +92,9 @@ namespace Calculadora_Proyecto
             num = -num;
             return num;
         }
-        public String eliminaCaracter(String num) {
+
+       
+        public string eliminaCaracter(string num) {
 
 
             num = num.Replace("π","");
@@ -101,6 +106,7 @@ namespace Calculadora_Proyecto
             num = num.Replace("tan", "");
             return num;
         }
+
         
     }
 
